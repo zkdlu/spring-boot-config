@@ -6,3 +6,4 @@ spring:
       server:
         git:
           uri: "https://github.com/zkdlu/my-config"
+          default-label: main
