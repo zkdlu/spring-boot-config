@@ -7,12 +7,12 @@
 
 ```yml
 # zkdlu-dev.yml
-spring:
-  profiles: dev
+hello:
+  world: dev
   
 # zkdlu-prod.yml
-spring:
-  profiles: product
+hello:
+  world: product
 ```
 > 설정파일의 경우 {name}-{environment}.yml 형식으로 작성하도록 한다.
 
