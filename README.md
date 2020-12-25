@@ -53,3 +53,6 @@ public class ConfigServerApplication {
 
 4. 확인
 > http://localhost:8080/zkdlu/dev 로 접속 해보면 설정 파일을 읽어오는걸 확인할 수 있다.
+
+## Spring Cloud Config Client
+아직 안 됨
