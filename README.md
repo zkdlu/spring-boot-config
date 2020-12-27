@@ -55,4 +55,40 @@ public class ConfigServerApplication {
 > http://localhost:8080/zkdlu/dev 로 접속 해보면 설정 파일을 읽어오는걸 확인할 수 있다.
 
 ## Spring Cloud Config Client
-아직 안 됨
+> **Spring boot 버전을 2.4.1로 시도를 하였는데 아직 지원을 안하나보다. 2.3.7버전으로 시도를 하니 바로 되었다.**
+
+1. Dependency 추가
+```gradle
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+}
+```
+
+2. application.yml & bootstrap.yml 설정
+> bootstrap.yml은 spring cloud 가 application.yml 보다 먼저 로드 하는 설정파일이다.
+```yml
+# application.yml
+server:
+  port: 8081
+spring:
+  application:
+    name: zkdlu
+```
+> 중앙 저장소에 저장된 설정파일인 {application}-{environment}.yml의 형식에 맞춰 application name을 지정해준다.
+```yml
+# bootstrap.yml
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8080
+```
+
+3. 사용
+빌드 옵션으로 -Dspring.profiles.active=dev을 주면 zkdlu-dev.yml에 있는 설정을 @Value 어노테이션을 활용하여 간단하게 사용 가능하다.
+```java
+ @Value("${hello.world}")
+private String test;
+```
+
+4. actuator를 활용한 Refresh
