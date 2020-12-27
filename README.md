@@ -87,8 +87,35 @@ spring:
 3. 사용
 빌드 옵션으로 -Dspring.profiles.active=dev을 주면 zkdlu-dev.yml에 있는 설정을 @Value 어노테이션을 활용하여 간단하게 사용 가능하다.
 ```java
- @Value("${hello.world}")
-private String test;
+@RestController
+public class TestController {
+    @Value("${hello.world}")
+    private String test;
 ```
 
 4. actuator를 활용한 Refresh
+1. 의존성 추가
+```gradle
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+```
+
+2. RefreshScope 어노테이션 추가
+```java
+@RefreshScope
+@RestController
+public class TestController {
+    @Value("${hello.world}")
+    private String test;
+```
+
+3. application.yml 설정
+```yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+```
+>  http://localhost:8081/actuator/refresh 로 POST 요청을 하면 config server로부터 새로 설정을 읽어들인다.
